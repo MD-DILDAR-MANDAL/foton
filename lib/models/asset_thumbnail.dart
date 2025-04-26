@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:foton/pages/image_view.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 class AssetThumbnail extends StatelessWidget {
@@ -14,7 +15,17 @@ class AssetThumbnail extends StatelessWidget {
       builder: (_, snapshot) {
         final bytes = snapshot.data;
         if (bytes == null) return const CircularProgressIndicator();
-        return Image.memory(bytes, fit: BoxFit.cover);
+        return InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => ImageView(imageFile: entity.file),
+              ),
+            );
+          },
+          child: Image.memory(bytes, fit: BoxFit.cover),
+        );
       },
     );
   }

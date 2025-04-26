@@ -30,17 +30,27 @@ class _GalleryScreenState extends State<GalleryScreen> {
         title: Text('Foton'),
         foregroundColor: Color(0xFF9E7462),
         backgroundColor: Color(0xFFFDDCC8),
+        automaticallyImplyLeading: false,
       ),
-      body: Center(
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Flexible(
+            child: GridView.builder(
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+              ),
+              itemCount: entities.length,
+              itemBuilder: (_, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: AssetThumbnail(entity: entities[index]),
+                );
+              },
+            ),
           ),
-          itemCount: entities.length,
-          itemBuilder: (_, index) {
-            return AssetThumbnail(entity: entities[index]);
-          },
-        ),
+        ],
       ),
     );
   }

@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:foton/routes/routes.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,18 +28,13 @@ class MainPage extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () async {
-                  final PermissionState ps =
-                      await PhotoManager.requestPermissionExtend();
-                  // the method can use optional param `permission`.
-                  if (ps.isAuth) {
-                    Navigator.of(context).pushNamed(RouteManager.gallery);
-                  } else if (ps.hasAccess) {
-                    // Access will continue, but the amount visible depends on the user's selection.
-                  } else {
-                    PhotoManager.openSetting();
-                    // Limited(iOS) or Rejected, use `==` for more precise judgements.
-                    // You can call `PhotoManager.openSetting()` to open settings for further steps.
-                  }
+                  PhotoManager.requestPermissionExtend().then((value) {
+                    if (value.isAuth) {
+                      Navigator.of(context).pushNamed(RouteManager.gallery);
+                    } else if (value.hasAccess) {
+                      Navigator.of(context).pushNamed(RouteManager.gallery);
+                    }
+                  });
                 },
                 child: Text('Grant Permission'),
               ),
