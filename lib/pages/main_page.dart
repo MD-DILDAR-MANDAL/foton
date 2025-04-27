@@ -10,15 +10,26 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  bool hasPermission = false;
+  bool _hasPermission = false;
+
   @override
   void initState() {
     super.initState();
-    PhotoManager.requestPermissionExtend().then((value) {
-      if (value.hasAccess) {
-        hasPermission = true;
-      }
-    });
+    _checkPermission();
+  }
+
+  Future<void> _checkPermission() async {
+    final PermissionState ps = await PhotoManager.requestPermissionExtend();
+    if (ps.isAuth || ps.hasAccess) {
+      setState(() {
+        _hasPermission = true;
+      });
+      Navigator.of(context).popAndPushNamed(RouteManager.gallery);
+    } else {
+      setState(() {
+        _hasPermission = false;
+      });
+    }
   }
 
   @override
@@ -32,26 +43,15 @@ class _MainPageState extends State<MainPage> {
         leading: Icon(Icons.menu),
       ),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () async {
-                  PhotoManager.requestPermissionExtend().then((value) {
-                    if (value.isAuth) {
-                      Navigator.of(context).pushNamed(RouteManager.gallery);
-                    } else if (value.hasAccess) {
-                      Navigator.of(context).pushNamed(RouteManager.gallery);
-                    }
-                  });
-                },
-                child: Text('Grant Permission'),
-              ),
-            ],
-          ),
-        ),
+        child:
+            _hasPermission
+                ? CircularProgressIndicator()
+                : ElevatedButton(
+                  onPressed: () {
+                    PhotoManager.openSetting();
+                  },
+                  child: Text('Grant Permission'),
+                ),
       ),
     );
   }
