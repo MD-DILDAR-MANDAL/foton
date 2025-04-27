@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foton/models/asset_thumbnail.dart';
+import 'package:foton/pages/drawer_view.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 class GalleryScreen extends StatefulWidget {
@@ -30,8 +31,8 @@ class _GalleryScreenState extends State<GalleryScreen> {
         title: Text('Foton'),
         foregroundColor: Color(0xFF9E7462),
         backgroundColor: Color(0xFFFDDCC8),
-        automaticallyImplyLeading: false,
       ),
+      drawer: DrawerView(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
