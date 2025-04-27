@@ -12,7 +12,7 @@ class GalleryScreen extends StatefulWidget {
 class _GalleryScreenState extends State<GalleryScreen> {
   List<AssetEntity> entities = [];
   Future<void> _fetchData() async {
-    entities = await PhotoManager.getAssetListRange(start: 0, end: 10000);
+    entities = await PhotoManager.getAssetListRange(start: 0, end: 100000);
     setState(() {});
   }
 

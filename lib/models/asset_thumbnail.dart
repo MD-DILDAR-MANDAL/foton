@@ -19,9 +19,7 @@ class AssetThumbnail extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (_) => ImageView(imageFile: entity.file),
-              ),
+              MaterialPageRoute(builder: (_) => ImageView(aEntity: entity)),
             );
           },
           child: Image.memory(bytes, fit: BoxFit.cover),
