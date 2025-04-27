@@ -10,6 +10,17 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  bool hasPermission = false;
+  @override
+  void initState() {
+    super.initState();
+    PhotoManager.requestPermissionExtend().then((value) {
+      if (value.hasAccess) {
+        hasPermission = true;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
