@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:foton/pages/image_view.dart';
+import 'package:foton/pages/video_view.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 class AssetThumbnail extends StatelessWidget {
@@ -19,10 +20,29 @@ class AssetThumbnail extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => ImageView(aEntity: entity)),
+              MaterialPageRoute(
+                builder: (_) {
+                  if (entity.type == AssetType.image) {
+                    return ImageView(aEntity: entity);
+                  } else {
+                    return VideoView(aEntity: entity);
+                  }
+                },
+              ),
             );
           },
-          child: Image.memory(bytes, fit: BoxFit.cover),
+          child: Stack(
+            children: [
+              Image.memory(bytes, fit: BoxFit.cover),
+              if (entity.type == AssetType.video)
+                Center(
+                  child: Container(
+                    color: Colors.blue,
+                    child: const Icon(Icons.play_arrow, color: Colors.white),
+                  ),
+                ),
+            ],
+          ),
         );
       },
     );
