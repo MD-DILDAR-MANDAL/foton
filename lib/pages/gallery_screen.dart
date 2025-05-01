@@ -45,7 +45,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
               itemCount: entities.length,
               itemBuilder: (_, index) {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: AssetThumbnail(entity: entities[index]),
                 );
               },

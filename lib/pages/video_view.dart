@@ -5,7 +5,7 @@ import 'package:photo_manager/photo_manager.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoView extends StatefulWidget {
-  VideoView({super.key, required this.aEntity});
+  const VideoView({super.key, required this.aEntity});
   final AssetEntity aEntity;
 
   @override
@@ -65,7 +65,7 @@ class _VideoViewState extends State<VideoView> {
                   child: videoPlayerWidget,
                 ),
               )
-              : CircularProgressIndicator(),
+              : Center(child: CircularProgressIndicator()),
     );
   }
 }
