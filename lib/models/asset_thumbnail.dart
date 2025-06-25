@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:foton/pages/image_view.dart';
-//import 'package:foton/pages/video_view.dart';
+import 'package:foton/pages/video_view.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 class AssetThumbnail extends StatelessWidget {
@@ -15,7 +15,7 @@ class AssetThumbnail extends StatelessWidget {
       future: entity.thumbnailData.then((value) => value!),
       builder: (_, snapshot) {
         final bytes = snapshot.data;
-        if (bytes == null) return const CircularProgressIndicator();
+        if (bytes == null) return Icon(Icons.hourglass_empty);
         return InkWell(
           onTap: () {
             Navigator.push(
@@ -24,13 +24,11 @@ class AssetThumbnail extends StatelessWidget {
                 builder: (_) {
                   if (entity.type == AssetType.image) {
                     return ImageView(aEntity: entity);
+                  } else if (entity.type == AssetType.video) {
+                    return VideoView(aEntity: entity);
                   } else {
                     return SizedBox(height: 0.0);
                   }
-                  //to load video too
-                  //   else {
-                  //     return VideoView(aEntity: entity);
-                  //   }
                 },
               ),
             );
